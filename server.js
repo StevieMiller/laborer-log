@@ -4,15 +4,12 @@ const mysql = require("mysql2");
 const consoleTable = require("console.table");
 
 // Connection to database
-const db = mysql.createConnection(
-  {
-    host: "localhost",
-    user: "root",
-    password: "1234",
-    database: "employee_db",
-  },
-  console.log("Connected to employee database")
-);
+const db = mysql.createConnection({
+  host: "localhost",
+  user: "root",
+  password: "1234",
+  database: "employee_db",
+});
 
 // Variable that holds array of questions
 const questions = [
@@ -75,7 +72,7 @@ function inquire() {
 
 // Function to view departments
 const viewDepts = () =>
-  db.query("SELECT", (err, res) => {
+  db.query("SELECT ", (err, res) => {
     if (err) throw err;
     console.table("Departments", res);
     inquire();
