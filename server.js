@@ -3,13 +3,24 @@ const inquirer = require("inquirer");
 const mysql = require("mysql2");
 const consoleTable = require("console.table");
 
+const PORT = process.env.PORT || 3001;
+//const app = express();
+
+// Middleware
+//app.use(express.urlencoded({ extended: false }));
+//app.use(express.json());
+
 // Connection to database
-const db = mysql.createConnection({
-  host: "localhost",
-  user: "root",
-  password: "1234",
-  database: "employee_db",
-});
+const db = mysql.createConnection(
+  {
+    host: "127.0.0.1",
+    user: "root",
+    password: "1234",
+    database: "employee_db",
+    port: 3001,
+  },
+  console.log("Connected to database")
+);
 
 // Variable that holds array of questions
 const questions = [
