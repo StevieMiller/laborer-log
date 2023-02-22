@@ -81,21 +81,21 @@ function inquire() {
 
 // Function to view departments
 const viewDepts = () =>
-  db.query("SELECT ", (err, res) => {
+  db.query("SELECT * FROM departments", (err, res) => {
     if (err) throw err;
     console.table("Departments", res);
     inquire();
   });
 // Function to view roles
 const viewRoles = () =>
-  db.query("SELECT", (err, res) => {
+  db.query("SELECT * FROM roles", (err, res) => {
     if (err) throw err;
     console.table("Roles", res);
     inquire();
   });
 // Function to view employees
 const viewEmps = () =>
-  db.query("SELECT", (err, res) => {
+  db.query("SELECT * FROM employees", (err, res) => {
     if (err) throw err;
     console.table("Employees", res);
     inquire();
