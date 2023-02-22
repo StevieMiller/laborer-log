@@ -44,7 +44,7 @@ function inquire() {
     console.log(res);
     // switch case to check for selection, then fire function that takes user to the next step
     // case for each prompt
-    switch (res) {
+    switch (res.directory) {
       case "View all departments":
         // function to view depts
         viewDepts();
