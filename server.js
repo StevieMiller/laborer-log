@@ -30,7 +30,7 @@ const questions = [
       "Add a role",
       "Add an employee",
       "Update an employee role",
-      "Exit",
+      "Quit",
     ],
   },
 ];
@@ -65,11 +65,13 @@ function inquire() {
         // function to add employee
         addEmp();
         break;
-      case "Update a role":
+      case "Update an employee role":
         // function to update role
+        updateRole();
         break;
       case "Quit":
         // function to quit
+        quit();
         break;
     }
   });
@@ -188,6 +190,43 @@ const addEmp = () => {
     });
 };
 // Function to update a role
+const updateRole = () => {
+  inquirer
+    .prompt([
+      {
+        type: "input",
+        name: "first_name",
+        message: "First name:",
+      },
+      {
+        type: "input",
+        name: "last_name",
+        message: "Last name:",
+      },
+      {
+        type: "input",
+        name: "role_id",
+        message: "Role ID:",
+      },
+    ])
+    .then((res) => {
+      db.query(
+        "UPDATE employees SET role_id =? WHERE first_name =? AND last_name =?",
+        [res.role_id, res.first_name, res.last_name],
+        (err, results) => {
+          if (err) throw err;
+          console.log(
+            `Successfully updated employee: ${res.first_name} ${res.last_name} - New role ID: ${res.role_id}`
+          );
+          inquire();
+        }
+      );
+    });
+};
+// Function to quit
+const quit = () => {
+  console.log(`Goodbye!`);
+};
 
 // Function to initialize app
 inquire();
