@@ -122,7 +122,7 @@ const addRole = () => {
     .prompt([
       {
         type: "input",
-        name: "name",
+        name: "title",
         message: "Role name:",
       },
       {
@@ -132,17 +132,17 @@ const addRole = () => {
       },
       {
         type: "input",
-        name: "department",
-        message: "Department:",
+        name: "dept_id",
+        message: "Department ID:",
       },
     ])
     .then((res) => {
       db.query(
         "INSERT INTO roles (title, salary, dept_id) VALUES (?, ?, ?)",
-        res.newRole,
+        [res.title, res.salary, res.dept_id],
         (err, results) => {
           if (err) throw err;
-          console.log(`Successfully added new role: ${res.newRole}`);
+          console.log(`Successfully added new role: ${res.title}`);
           inquire();
         }
       );
@@ -154,12 +154,12 @@ const addEmp = () => {
     .prompt([
       {
         type: "input",
-        name: "first",
+        name: "first_name",
         message: "First name:",
       },
       {
         type: "input",
-        name: "last",
+        name: "last_name",
         message: "Last name:",
       },
       {
@@ -176,10 +176,12 @@ const addEmp = () => {
     .then((res) => {
       db.query(
         "INSERT INTO employees (first_name, last_name, role_id, manager_id) VALUES (?, ?, ?, ?)",
-        res.newEmp,
+        [res.first_name, res.last_name, res.role_id, res.manager_id],
         (err, results) => {
           if (err) throw err;
-          console.log(`Successfully added new employee: ${res.newEmp}`);
+          console.log(
+            `Successfully added new employee: ${res.first_name} ${res.last_name}`
+          );
           inquire();
         }
       );
