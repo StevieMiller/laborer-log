@@ -4,17 +4,13 @@ const mysql = require("mysql2");
 const consoleTable = require("console.table");
 
 const PORT = process.env.PORT || 3001;
-//const app = express();
-
-// Middleware
-//app.use(express.urlencoded({ extended: false }));
-//app.use(express.json());
 
 // Connection to database
 const db = mysql.createConnection(
   {
     host: "127.0.0.1",
     user: "root",
+    password: "1234",
     database: "employee_db",
   },
   console.log("Connected to database")
@@ -109,11 +105,15 @@ const addDept = () => {
       message: "Department name:",
     })
     .then((res) => {
-      db.query("INSERT", res.newDept, (err, results) => {
-        if (err) throw err;
-        console.log(`Successfully added new department: ${res.newDept}`);
-        inquire();
-      });
+      db.query(
+        "INSERT INTO departments (dept_name) VALUES (?)",
+        res.newDept,
+        (err, results) => {
+          if (err) throw err;
+          console.log(`Successfully added new department: ${res.newDept}`);
+          inquire();
+        }
+      );
     });
 };
 // Function to add a role
@@ -122,32 +122,67 @@ const addRole = () => {
     .prompt([
       {
         type: "input",
-        name: "newRole",
+        name: "name",
         message: "Role name:",
+      },
+      {
+        type: "input",
+        name: "salary",
+        message: "Salary:",
+      },
+      {
+        type: "input",
+        name: "department",
+        message: "Department:",
       },
     ])
     .then((res) => {
-      db.query("INSERT", res.newRole, (err, results) => {
-        if (err) throw err;
-        console.log(`Successfully added new role: ${res.newRole}`);
-        inquire();
-      });
+      db.query(
+        "INSERT INTO roles (title, salary, dept_id) VALUES (?, ?, ?)",
+        res.newRole,
+        (err, results) => {
+          if (err) throw err;
+          console.log(`Successfully added new role: ${res.newRole}`);
+          inquire();
+        }
+      );
     });
 };
 // Function to add an employee
 const addEmp = () => {
   inquirer
-    .prompt({
-      type: "input",
-      name: "newEmp",
-      message: "Employee name:",
-    })
+    .prompt([
+      {
+        type: "input",
+        name: "first",
+        message: "First name:",
+      },
+      {
+        type: "input",
+        name: "last",
+        message: "Last name:",
+      },
+      {
+        type: "input",
+        name: "role_id",
+        message: "Role ID:",
+      },
+      {
+        type: "input",
+        name: "manager_id",
+        message: "Manager ID:",
+      },
+    ])
     .then((res) => {
-      db.query("INSERT", res.newEmp, (err, results) => {
-        if (err) throw err;
-        console.log(`Successfully added new employee: ${res.newEmp}`);
-        inquire();
-      });
+      db.query(
+        "INSERT INTO employees (first_name, last_name, role_id, manager_id) VALUES (?, ?, ?, ?)",
+        res.newEmp,
+        (err, results) => {
+          if (err) throw err;
+          console.log(`Successfully added new employee: ${res.newEmp}`);
+          inquire();
+        }
+      );
     });
 };
 // Function to update a role
