@@ -22,7 +22,7 @@ This application requires Node.js, Express.js, and MySQL to run properly in your
 
 This application is meant to be used to store and organize company data.
 
-![Screenshot](images/screenshot.png)
+![Screenshot](images/laborer-log.png)
 
 [Click here to view a demonstration video](https://opensource.org/licenses/MIT)
 
